@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProductoMVVMSQLite.Views.ProductoPage"
+             Title="ProductoPage">
+    <VerticalStackLayout>
+
+        <HorizontalStackLayout BackgroundColor="DarkBlue">
+            <Image Source="dotnet_bot.png" HeightRequest="50" WidthRequest="100"/>
+            <Label x:Name="Username" Text="Productos" FontSize="30" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <Button Text="Nuevo Producto" FontSize="20" HorizontalOptions="Fill" BackgroundColor="Yellow" TextColor="Black" Command="{Binding CrearProducto}"/>
+
+        <CollectionView x:Name="listaProductos"
+              SelectedItem="{Binding ProductoSeleccionado}"
+              ItemsSource="{Binding ListaProductos}"
+              SelectionMode="Single"
+              SelectionChangedCommand="{Binding EditarProducto}"
+              >
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" SnapPointsAlignment="Start" SnapPointsType="MandatorySingle" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+
+                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                            <Label Text="{Binding Nombre}" VerticalOptions="Start" FontSize="20"/>
+                            <Label Text="{Binding Cantidad}" VerticalOptions="End" FontSize="20"/>
+                            <Label Text="{Binding Descripcion}" VerticalOptions="End" FontSize="20"/>
+                        </StackLayout>
+
+                        <!-- Modificación para los botones "Eliminar" y "Editar" -->
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10">
+                            <Button Text="Eliminar" BackgroundColor="Red" Command="{Binding BindingContext.EliminarProducto, Source={x:Reference listaProductos}}" CommandParameter="{Binding .}" TextColor="White"/>
+                            <Button Text="Editar" BackgroundColor="Blue" Command="{Binding BindingContext.EditarProducto, Source={x:Reference listaProductos}}" CommandParameter="{Binding .}" TextColor="White"/>
+                        </StackLayout>
+
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </VerticalStackLayout>
+</ContentPage>
