@@ -31,29 +31,13 @@ namespace ProductoMVVMSQLite.ViewModels
             {
                 await App.Current.MainPage.Navigation.PushAsync(new NuevoProductoPage());
             });
-        /*
-        public ICommand EditarProducto =>
-            new Command(async () =>
-            {
-                if (ProductoSeleccionado != null)
-                {
-                    int IdProducto = ProductoSeleccionado.IdProducto;
-                    //ProductoSeleccionado = null;
-                    await App.Current.MainPage.Navigation.PushAsync(new NuevoProductoPage(IdProducto));
-                    ProductoSeleccionado = null;
-                }
-              
 
-            });
-        */
         public ICommand EliminarProducto => new Command<Producto>(async (producto) =>
         {
-            bool confirmarEliminar = await App.Current.MainPage.DisplayAlert("Confirmar", $"¿Estás seguro de eliminar {producto.Nombre}?", "Sí", "No");
-            if (confirmarEliminar)
-            {
+           
                 App.productoRepository.Delete(producto);
                 Util.ListaProductos.Remove(producto);
-            }
+            
         });
         public ICommand EditarProducto => new Command<Producto>(async (producto) =>
         {
